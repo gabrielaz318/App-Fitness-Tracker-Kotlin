@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,14 +40,12 @@ class ListCalcActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
             }
         }.start()
-
-
     }
 
     private inner class ListCalcAdapter(private var list: List<Calc>) : RecyclerView.Adapter<ListCalcAdapter.ListCalcViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListCalcViewHolder {
-            val view = layoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false)
+            val view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false)
             return ListCalcViewHolder(view)
         }
 

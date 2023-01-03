@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this@MainActivity, ImcActivity::class.java)
                     startActivity(intent)
                 }
+                2 -> {
+                    val intent = Intent(this@MainActivity, TmbActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
         rvMain = findViewById(R.id.rv_main)
