@@ -2,6 +2,7 @@ package co.tiagoaguiar.fitnesstracker
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
@@ -10,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import co.tiagoaguiar.fitnesstracker.model.Calc
 
 class ImcActivity : AppCompatActivity() {
     private lateinit var editWeight: EditText
@@ -47,6 +49,21 @@ class ImcActivity : AppCompatActivity() {
                 setTitle(title)
                 setMessage(imcResponseId)
                 setPositiveButton(android.R.string.ok) { _, _ ->
+
+                }
+                setNegativeButton(R.string.save) { _, _ ->
+                    Thread {
+                        var app = (application as App)
+                        val dao = app.db.calcDao()
+                        dao.insert(Calc(type = "imc", res = result))
+
+                        runOnUiThread {
+
+                            val intent = Intent(this@ImcActivity, ListCalcActivity::class.java)
+                            intent.putExtra("type", "imc")
+                            startActivity(intent)
+                        }
+                    }.start()
 
                 }
                 create()
@@ -98,10 +115,10 @@ class ImcActivity : AppCompatActivity() {
         // Não pode inserir/começar com 0
 
         return (
-               editWeight.text.toString().isNotEmpty()
-            && editHeight.text.toString().isNotEmpty()
-            && !editWeight.text.toString().startsWith("0")
-            && !editHeight.text.toString().startsWith("0")
-        )
+                editWeight.text.toString().isNotEmpty()
+                        && editHeight.text.toString().isNotEmpty()
+                        && !editWeight.text.toString().startsWith("0")
+                        && !editHeight.text.toString().startsWith("0")
+                )
     }
 }
